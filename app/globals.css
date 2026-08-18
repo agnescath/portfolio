@@ -5,19 +5,169 @@
   --font-sans: "Inter", sans-serif;
 }
 
-/* Custom glow effects for the developer aesthetic */
+/* Hide default cursor on desktop */
+@media (pointer: fine) {
+  * { cursor: none !important; }
+}
+
+/* Custom cursor */
+.cursor-dot {
+  position: fixed;
+  top: 0; left: 0;
+  width: 10px; height: 10px;
+  background: #a855f7;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: width 0.2s, height 0.2s, background 0.2s;
+  box-shadow: 0 0 12px 4px rgba(168, 85, 247, 0.6);
+}
+
+.cursor-ring {
+  position: fixed;
+  top: 0; left: 0;
+  width: 38px; height: 38px;
+  border: 2px solid rgba(168, 85, 247, 0.5);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: width 0.25s ease, height 0.25s ease, border-color 0.25s ease;
+}
+
+.cursor-dot.hovering {
+  width: 16px; height: 16px;
+  background: #c084fc;
+}
+
+.cursor-ring.hovering {
+  width: 56px; height: 56px;
+  border-color: rgba(192, 132, 252, 0.7);
+}
+
+/* Scroll progress bar */
+.scroll-progress {
+  position: fixed;
+  top: 0; left: 0;
+  height: 3px;
+  background: linear-gradient(to right, #7c3aed, #a855f7, #c084fc);
+  z-index: 9999;
+  transform-origin: left;
+  box-shadow: 0 0 10px rgba(168, 85, 247, 0.8);
+}
+
+/* Floating orbs */
+.orb {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 0;
+  animation: float-orb 8s ease-in-out infinite;
+}
+
+.orb-1 {
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(109,40,217,0.15) 0%, transparent 70%);
+  top: -100px; left: -150px;
+  animation-delay: 0s;
+}
+
+.orb-2 {
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(168,85,247,0.1) 0%, transparent 70%);
+  bottom: 10%; right: -100px;
+  animation-delay: -3s;
+}
+
+.orb-3 {
+  width: 300px; height: 300px;
+  background: radial-gradient(circle, rgba(124,58,237,0.08) 0%, transparent 70%);
+  top: 50%; left: 40%;
+  animation-delay: -5s;
+}
+
+@keyframes float-orb {
+  0%, 100% { transform: translateY(0px) scale(1); }
+  50% { transform: translateY(-30px) scale(1.05); }
+}
+
+/* Glow text / box utilities */
 @layer utilities {
   .glow-purple {
     box-shadow: 0 0 20px 0px rgba(168, 85, 247, 0.4);
   }
-  
+
   .text-glow-purple {
     text-shadow: 0 0 15px rgba(168, 85, 247, 0.5);
   }
-  
+
   .glass-card {
     background: rgba(23, 23, 23, 0.7);
     backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.1);
   }
+
+  /* Reveal line for section headers */
+  .reveal-line {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .reveal-line::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: #0a0a0a;
+    transform: translateX(0%);
+    transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+  }
+
+  .reveal-line.revealed::after {
+    transform: translateX(100%);
+  }
+
+  /* Magnetic button base */
+  .magnetic-btn {
+    transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  /* Grid background */
+  .grid-bg {
+    background-image: linear-gradient(to right, #4f4f4f2e 1px, transparent 1px),
+                      linear-gradient(to bottom, #4f4f4f2e 1px, transparent 1px);
+    background-size: 4rem 4rem;
+    mask-image: radial-gradient(ellipse 60% 50% at 50% 50%, #000 70%, transparent 100%);
+  }
+
+  /* Glow border on hover */
+  .hover-glow {
+    transition: box-shadow 0.4s ease, border-color 0.4s ease;
+  }
+
+  .hover-glow:hover {
+    box-shadow: 0 0 30px rgba(168, 85, 247, 0.2), inset 0 0 30px rgba(168, 85, 247, 0.03);
+    border-color: rgba(168, 85, 247, 0.4);
+  }
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+::-webkit-scrollbar-thumb {
+  background: #7c3aed;
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #a855f7;
 }

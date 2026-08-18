@@ -4,310 +4,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useScroll, useSpring, useTransform, useMotionValue } from 'framer-motion';
 import { Terminal, BrainCircuit, Code2, ExternalLink, Mail, Award, Layout, Database, BarChart3, ChevronRight, CheckCircle2, GraduationCap, FileText, X } from 'lucide-react';
 
-/* ─── Project data ─── */
-const PROJECTS = [
-  {
-    id: 'likas',
-    num: '01',
-    tag: 'Machine Learning · Full Stack · Academic',
-    year: '2024',
-    title: 'LIKAS',
-    subtitle: 'Flood Prioritization Decision Support System',
-    tagline: 'Using machine learning to help prioritize flood-affected communities and guide faster, smarter disaster response.',
-    screenshot: '/assets/images/projects/likas/Visual_and_Main_Face.png',
-    github: null,
-    stats: [{ val: '2', label: 'ML Models' }, { val: '4', label: 'Key Features' }, { val: '91%', label: 'Accuracy' }],
-    stack: ['React', 'TypeScript', 'Python', 'PostgreSQL', 'Random Forest', 'XGBoost', 'Flask'],
-    tasks: ['ML Research', 'Full-Stack Dev', 'Feature Engineering', 'Data Visualization', 'Model Evaluation', 'Database Design'],
-    origin: 'LIKAS was born from a real need: during flood events in highly vulnerable communities, disaster response teams often lack a clear, data-backed way to decide which areas need help first. Manual processes are slow and prone to bias. We built LIKAS to bring objectivity to that decision.',
-    problem: [
-      { title: 'No Prioritization Framework', desc: 'Responders had no standardized method to rank flood-affected barangays by urgency — decisions were made based on incomplete information.' },
-      { title: 'Data Silos', desc: 'Flood vulnerability indicators like population density, infrastructure quality, and historical flood data were scattered across different sources with no unified view.' },
-      { title: 'Slow Response Time', desc: 'Without a decision-support tool, resource allocation during disasters was reactive rather than predictive, leading to delayed aid.' },
-    ],
-    solution: [
-      { title: 'ML-Powered Scoring Engine', desc: 'Built and compared Random Forest and XGBoost models trained on real flood and vulnerability datasets to generate area-level priority scores.' },
-      { title: 'Interactive Web Dashboard', desc: 'Developed a React-based web application that displays prioritized rankings with drill-down views for each barangay\'s vulnerability factors.' },
-      { title: 'Data Integration Pipeline', desc: 'Built a Python data pipeline to clean, merge, and transform multi-source datasets into a unified format ready for model training and display.' },
-      { title: 'Visual Analytics', desc: 'Integrated charts and heatmaps to visually communicate model outputs and flood risk levels to non-technical stakeholders.' },
-    ],
-    impact: [
-      { title: 'Faster Decision-Making', desc: 'Decision-support tool reduces the time needed to identify high-priority areas from hours to seconds.' },
-      { title: 'Data-Driven Aid Allocation', desc: 'Priority scores backed by ML eliminate guesswork, ensuring resources reach the most vulnerable communities first.' },
-      { title: 'Reproducible Research', desc: 'System and methodology were fully documented and validated as an academic capstone project.' },
-    ],
-    learned: ['The challenge of training ML models on imbalanced disaster datasets and the importance of feature selection in determining real-world accuracy.'],
-    learnedTags: ['Random Forest', 'XGBoost', 'Feature Engineering', 'React State Management', 'Data Pipeline Design'],
-    images: [
-      '/assets/images/projects/likas/Visual.png',
-      '/assets/images/projects/likas/Visual_2.png',
-      '/assets/images/projects/likas/Visual_3.png',
-      '/assets/images/projects/likas/Visual_4.png',
-      '/assets/images/projects/likas/Visual_5.png',
-      '/assets/images/projects/likas/Visual_6.png',
-      '/assets/images/projects/likas/Visual_7.png',
-      '/assets/images/projects/likas/Visual_8.png',
-      '/assets/images/projects/likas/Visual_9.png',
-      '/assets/images/projects/likas/Visual_10.png',
-      '/assets/images/projects/likas/Visual_11.png'
-    ],
-    links: [
-      { label: 'Project Proposal', href: '/assets/Likas-Assets/LIKAS%20-PROPOSAL.pdf' },
-      { label: 'User Manual', href: '/assets/Likas-Assets/LIKAS%20-%20DETAILED%20USER%20MANUAL.pdf' },
-    ],
-  },
-  {
-    id: 'gov',
-    num: '02',
-    tag: 'Full Stack · Academic',
-    year: '2024',
-    title: 'Gov Appointment System',
-    subtitle: 'Web-Based Appointment Management Platform',
-    tagline: 'Streamlining government service scheduling with multi-role workflows, status tracking, and a secure normalized database.',
-    screenshot: '/assets/images/projects/gov/main_face.png',
-    github: null,
-    stats: [{ val: '3', label: 'User Roles' }, { val: '5+', label: 'Core Modules' }, { val: '1', label: 'SRS Document' }],
-    stack: ['React', 'Node.js', 'MySQL', 'REST APIs', 'Express'],
-    tasks: ['Full-Stack Development', 'Database Design', 'Role-Based Auth', 'Workflow Design', 'SRS Documentation'],
-    origin: 'Government appointment processes are often paper-based, confusing, and inaccessible. This system was designed to digitize and streamline the scheduling of appointments for citizens visiting government offices — reducing wait times and administrative overhead.',
-    problem: [
-      { title: 'Manual Scheduling Chaos', desc: 'Staff managed appointments manually through paper logs, leading to double-bookings, missed slots, and frustrated citizens.' },
-      { title: 'No Role Separation', desc: 'Different staff types (admin, frontline) had no defined access boundaries, creating security and accountability issues.' },
-      { title: 'Lack of Visibility', desc: 'There was no way to track appointment status in real time — citizens couldn\'t check if their appointment was confirmed, rescheduled, or cancelled.' },
-    ],
-    solution: [
-      { title: 'Multi-Role User System', desc: 'Designed and implemented three distinct roles: Admin (full control), Staff (appointment management), and Citizen (self-service scheduling).' },
-      { title: 'Appointment Workflow Engine', desc: 'Built a full scheduling workflow with status transitions (Pending → Confirmed → Completed/Cancelled) and notification triggers.' },
-      { title: 'Normalized Relational Schema', desc: 'Designed a 3NF-compliant database schema ensuring data integrity, eliminating redundancy, and supporting efficient multi-table querying.' },
-      { title: 'Formal SRS Documentation', desc: 'Produced a complete Software Requirements Specification document outlining all functional and non-functional requirements.' },
-    ],
-    impact: [
-      { title: 'Paperless Scheduling', desc: 'Replaced manual logs with a digital system, eliminating double-booking and lost appointment records.' },
-      { title: 'Clear Accountability', desc: 'Role-based access ensures each user type only sees and does what they\'re supposed to — no more unauthorized edits.' },
-      { title: 'Real-Time Status Tracking', desc: 'Citizens and staff can always see the current state of any appointment, reducing follow-up calls and confusion.' },
-    ],
-    learned: ['This project deepened my understanding of relational schema design and how proper normalization prevents data anomalies at scale — especially in multi-user environments.'],
-    learnedTags: ['Relational Modeling', '3NF Normalization', 'Role-Based Auth', 'REST API Design', 'Requirements Engineering'],
-    images: [
-      '/assets/images/projects/gov/Visual.png',
-      '/assets/images/projects/gov/Visual_2.png',
-      '/assets/images/projects/gov/Visual_3.png',
-      '/assets/images/projects/gov/Visual_4.png',
-      '/assets/images/projects/gov/Visual_5.png'
-    ],
-    links: [
-      { label: 'View SRS Document', href: '/assets/25057-GRP2-SRS-Final.pdf' },
-    ],
-  },
-  {
-    id: 'optical',
-    num: '03',
-    tag: 'Full Stack · Freelance',
-    year: '2023',
-    title: 'Dr. M.K. Optical Clinic',
-    subtitle: 'Patient Records Management System',
-    tagline: 'A secure, clinic-ready records system built from scratch — handling patient data, prescriptions, and encrypted backups.',
-    screenshot: '/assets/images/projects/optical/main_face.png',
-    github: null,
-    stats: [{ val: '1', label: 'Live Clinic' }, { val: '3', label: 'Core Modules' }, { val: '100%', label: 'Custom UI' }],
-    stack: ['HTML', 'CSS', 'JavaScript', 'PHP', 'MySQL', 'XAMPP'],
-    tasks: ['UI/UX Design', 'Full-Stack Dev', 'Database Design', 'Encrypted Backup', 'Patient Records Module', 'Prescription Tracking'],
-    origin: 'A local optical clinic was managing all patient records manually on paper. As a freelance project, I was brought in to digitize their operations and build a secure, easy-to-use records management system that clinic staff could use without technical training.',
-    problem: [
-      { title: 'Paper-Based Records', desc: 'All patient history and prescriptions were stored on paper — prone to loss, difficult to search, and impossible to back up.' },
-      { title: 'No Prescription Tracking', desc: 'Clinic staff had no way to quickly retrieve a patient\'s eyeglass or contact lens prescription history across multiple visits.' },
-      { title: 'Data Loss Risk', desc: 'There was no backup system — a single incident like fire or flood could permanently destroy all patient records.' },
-    ],
-    solution: [
-      { title: 'Patient Records Module', desc: 'Built a full CRUD patient management interface allowing staff to create, view, update, and search patient profiles with visit history.' },
-      { title: 'Prescription Tracking', desc: 'Designed a prescription module that logs eyeglass and contact lens details per visit, with the ability to view historical prescription changes.' },
-      { title: 'Encrypted Backup & Restore', desc: 'Developed a one-click backup feature that exports an encrypted database snapshot, and a corresponding restore flow to recover data safely.' },
-      { title: 'Clean Staff-Friendly UI', desc: 'Designed the entire interface from scratch to be simple, fast, and usable by non-technical clinic staff without any training overhead.' },
-    ],
-    impact: [
-      { title: 'Fully Digitized Clinic Records', desc: 'The clinic transitioned from a paper-based system to a fully digital one, making patient lookup instant and reliable.' },
-      { title: 'Protected Patient Data', desc: 'Encrypted backups now protect years of patient history against hardware failure, theft, or accidental deletion.' },
-      { title: 'Faster Service', desc: 'Staff can now retrieve any patient\'s complete record and prescription history in seconds, reducing appointment delays.' },
-    ],
-    learned: ['Building for a non-technical end user taught me the importance of UX clarity over feature richness — every interaction had to be intuitive enough for a clinic receptionist with zero software background.'],
-    learnedTags: ['PHP Backend', 'MySQL', 'UX for Non-Technical Users', 'Data Encryption', 'Freelance Workflow'],
-    images: [
-      '/assets/images/projects/optical/Visual.png',
-      '/assets/images/projects/optical/Visual_2.png',
-      '/assets/images/projects/optical/Visual_3.png',
-      '/assets/images/projects/optical/Visual_4.png'
-    ],
-    links: [],
-  },
-];
-
-/* ─── Project Modal ─── */
-const ProjectModal = ({ project, onClose }: { project: typeof PROJECTS[0]; onClose: () => void }) => {
-  useEffect(() => {
-    document.body.style.overflow = 'hidden';
-    const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
-    window.addEventListener('keydown', handler);
-    return () => { document.body.style.overflow = ''; window.removeEventListener('keydown', handler); };
-  }, [onClose]);
-
-  return (
-    <div className="fixed inset-0 z-[200] flex items-end sm:items-center justify-center">
-      {/* Backdrop */}
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-        onClick={onClose} className="absolute inset-0 bg-black/80 backdrop-blur-md" />
-
-      {/* Sheet */}
-      <motion.div
-        initial={{ opacity: 0, y: 60 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 60 }}
-        transition={{ ease: [0.22, 1, 0.36, 1], duration: 0.45 }}
-        className="relative w-full max-w-3xl max-h-[92vh] sm:max-h-[88vh] bg-neutral-950 border border-white/10 sm:rounded-3xl rounded-t-3xl shadow-[0_0_80px_rgba(168,85,247,0.15)] overflow-hidden flex flex-col"
-      >
-        {/* ── Header ── */}
-        <div className="relative bg-gradient-to-br from-purple-950/60 via-neutral-900 to-neutral-950 border-b border-white/8 p-6 md:p-8 shrink-0">
-          {/* Close */}
-          <button onClick={onClose}
-            className="absolute top-4 right-4 bg-white/10 hover:bg-white/20 text-white p-2 rounded-full transition-colors">
-            <X size={16} />
-          </button>
-
-          <span className="text-purple-400 font-mono text-xs font-bold tracking-widest uppercase">{project.num} — {project.tag} · {project.year}</span>
-          <h2 className="text-2xl md:text-3xl font-black text-white mt-1 mb-0.5">{project.title}</h2>
-          <p className="text-neutral-300 text-sm md:text-base mb-4">{project.subtitle}</p>
-          <p className="text-neutral-400 text-sm leading-relaxed max-w-xl">{project.tagline}</p>
-
-          {/* Stats */}
-          <div className="flex gap-4 mt-5">
-            {project.stats.map(s => (
-              <div key={s.label} className="text-center">
-                <div className="text-xl font-black text-purple-400">{s.val}</div>
-                <div className="text-xs text-neutral-500 mt-0.5">{s.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* ── Scrollable body ── */}
-        <div className="overflow-y-auto flex-1 p-6 md:p-8 space-y-8">
-
-          {/* Tech stack */}
-          <div>
-            <h3 className="text-xs font-bold text-neutral-500 uppercase tracking-widest mb-3">Tech Stack</h3>
-            <div className="flex flex-wrap gap-2">
-              {project.stack.map(t => (
-                <span key={t} className="px-3 py-1.5 bg-purple-500/10 border border-purple-500/20 text-purple-300 text-xs font-semibold rounded-full">{t}</span>
-              ))}
-            </div>
-          </div>
-
-          {/* Tasks */}
-          <div>
-            <h3 className="text-xs font-bold text-neutral-500 uppercase tracking-widest mb-3">What I Did</h3>
-            <div className="flex flex-wrap gap-2">
-              {project.tasks.map(t => (
-                <span key={t} className="px-3 py-1.5 bg-white/5 border border-white/10 text-neutral-300 text-xs rounded-full">{t}</span>
-              ))}
-            </div>
-          </div>
-
-          {/* Origin */}
-          <div>
-            <h3 className="text-xs font-bold text-neutral-500 uppercase tracking-widest mb-3">Origin</h3>
-            <p className="text-neutral-300 text-sm leading-relaxed">{project.origin}</p>
-          </div>
-
-          {/* Problem */}
-          <div>
-            <h3 className="text-xs font-bold text-neutral-500 uppercase tracking-widest mb-4">The Problem</h3>
-            <div className="space-y-3">
-              {project.problem.map((p, i) => (
-                <div key={i} className="flex gap-3">
-                  <div className="w-1.5 h-1.5 rounded-full bg-red-400/70 mt-2 shrink-0" />
-                  <div>
-                    <span className="text-white text-sm font-semibold">{p.title}: </span>
-                    <span className="text-neutral-400 text-sm">{p.desc}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Solution */}
-          <div>
-            <h3 className="text-xs font-bold text-neutral-500 uppercase tracking-widest mb-4">The Solution</h3>
-            <div className="space-y-3">
-              {project.solution.map((s, i) => (
-                <div key={i} className="flex gap-3">
-                  <div className="w-1.5 h-1.5 rounded-full bg-purple-400 mt-2 shrink-0" />
-                  <div>
-                    <span className="text-white text-sm font-semibold">{s.title}: </span>
-                    <span className="text-neutral-400 text-sm">{s.desc}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Impact */}
-          <div>
-            <h3 className="text-xs font-bold text-neutral-500 uppercase tracking-widest mb-4">Impact</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              {project.impact.map((item, i) => (
-                <div key={i} className="bg-white/5 border border-white/8 rounded-xl p-4">
-                  <div className="text-white text-sm font-bold mb-1">{item.title}</div>
-                  <div className="text-neutral-400 text-xs leading-relaxed">{item.desc}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* What I Learned */}
-          <div className="bg-purple-500/5 border border-purple-500/15 rounded-2xl p-5">
-            <h3 className="text-xs font-bold text-purple-400 uppercase tracking-widest mb-3">What I Learned</h3>
-            <p className="text-neutral-300 text-sm leading-relaxed mb-4">{project.learned[0]}</p>
-            <div className="flex flex-wrap gap-2">
-              {project.learnedTags.map(t => (
-                <span key={t} className="text-xs text-purple-300 bg-purple-500/10 border border-purple-500/20 rounded-full px-3 py-1">✓ {t}</span>
-              ))}
-            </div>
-          </div>
-
-          {/* Links */}
-          {(project.links.length > 0 || project.github) && (
-            <div className="flex flex-wrap gap-3 pb-4">
-              {project.github && (
-                <a href={project.github} target="_blank" rel="noreferrer"
-                  className="inline-flex items-center gap-2 text-sm font-bold text-white bg-white/10 hover:bg-white/20 px-5 py-2.5 rounded-full transition-all border border-white/10">
-                  <ExternalLink size={15} /> GitHub Repo
-                </a>
-              )}
-              {project.links.map(l => (
-                <a key={l.label} href={l.href} target="_blank"
-                  className="inline-flex items-center gap-1.5 text-sm font-bold text-purple-400 hover:text-purple-300 bg-purple-500/10 px-5 py-2.5 rounded-full border border-purple-500/30 transition-colors">
-                  {l.label} <ExternalLink size={13} />
-                </a>
-              ))}
-            </div>
-          )}
-
-          {/* Visual Gallery */}
-          {project.images && project.images.length > 0 && (
-            <div className="mt-8 border-t border-white/5 pt-8">
-              <h3 className="text-xs font-bold text-neutral-500 uppercase tracking-widest mb-6">Gallery & Visuals</h3>
-              <div className="space-y-4">
-                {project.images.map((img, i) => (
-                  <div key={i} className="rounded-xl overflow-hidden border border-white/10">
-                    <img src={img} alt={`${project.title} screenshot ${i + 1}`} className="w-full h-auto object-cover" />
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-      </motion.div>
-    </div>
-  );
-};
-
 /* ─── Magnetic button ─── */
 const MagneticBtn = ({ children, className = "", href = "#", target, rel, ...props }: any) => {
   const ref = useRef<HTMLAnchorElement>(null);
@@ -422,9 +118,6 @@ export default function Portfolio() {
     window.addEventListener('mouseover', over);
     return () => { window.removeEventListener('mousemove', move); window.removeEventListener('mouseover', over); };
   }, []);
-
-  // Project modal
-  const [selectedProject, setSelectedProject] = useState<typeof PROJECTS[0] | null>(null);
 
   // Certificate modal
   const [selectedCert, setSelectedCert] = useState<any>(null);
@@ -694,46 +387,35 @@ export default function Portfolio() {
           {/* LIKAS */}
           <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-60px" }} transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }} className="mb-16">
-            <div
-              onClick={() => setSelectedProject(PROJECTS[0])}
-              className="glass-card rounded-3xl overflow-hidden border border-white/10 hover:border-purple-500/40 hover-glow transition-all duration-500 cursor-pointer group relative">
-              {/* Click hint */}
-              <div className="absolute top-4 right-4 z-10 opacity-0 group-hover:opacity-100 transition-opacity">
-                <span className="text-xs font-bold text-purple-300 bg-purple-500/15 border border-purple-500/20 px-3 py-1 rounded-full">Click to explore →</span>
-              </div>
+            <div className="glass-card rounded-3xl overflow-hidden border border-white/10 hover:border-purple-500/40 hover-glow transition-all duration-500">
               <div className="grid grid-cols-1 lg:grid-cols-2">
                 {/* Laptop mockup side */}
                 <div className="bg-neutral-900/50 p-8 flex items-center justify-center border-b lg:border-b-0 lg:border-r border-white/5">
-                  <LaptopMockup src={PROJECTS[0].screenshot!} alt="LIKAS System" />
+                  <LaptopMockup src="/assets/images/likas_screenshot_10.png" alt="LIKAS System" />
                 </div>
                 {/* Content */}
                 <div className="p-8 md:p-10">
-                  <span className="text-purple-400 font-mono text-xs font-bold tracking-wider">01 — Machine Learning · Full Stack · Academic · 2024</span>
-                  <h3 className="text-2xl font-bold text-white mt-2 mb-0.5">LIKAS</h3>
-                  <p className="text-neutral-300 text-sm font-medium mb-5">Flood Prioritization Decision Support System</p>
+                  <span className="text-purple-400 font-mono text-xs font-bold tracking-wider">01 — Machine Learning + Full Stack</span>
+                  <h3 className="text-2xl font-bold text-white mt-2 mb-1">LIKAS</h3>
+                  <p className="text-neutral-400 text-sm mb-6">Flood Prioritization Decision Support System</p>
                   <p className="text-neutral-400 text-sm leading-relaxed mb-6">
-                    Using machine learning to help prioritize flood-affected communities and guide faster, smarter disaster response.
+                    A web-based decision support system that helps prioritize flood-affected areas using machine learning and vulnerability data.
                   </p>
-                  <div className="flex gap-5 mb-6">
-                    {PROJECTS[0].stats.map(s => (
-                      <div key={s.label}>
-                        <div className="text-lg font-black text-purple-400">{s.val}</div>
-                        <div className="text-xs text-neutral-500">{s.label}</div>
-                      </div>
-                    ))}
+                  <div className="grid grid-cols-2 gap-4 mb-6 text-sm">
+                    <div><span className="text-white font-semibold text-xs uppercase tracking-widest block mb-1">My Role</span><span className="text-neutral-400">Full-Stack Dev · ML Researcher</span></div>
+                    <div><span className="text-white font-semibold text-xs uppercase tracking-widest block mb-1">Stack</span><span className="text-neutral-400">React · Python · PostgreSQL · RF · XGBoost</span></div>
                   </div>
-                  <div className="flex flex-wrap gap-2 mb-6">
-                    {PROJECTS[0].stack.slice(0, 4).map(t => (
-                      <span key={t} className="text-xs text-purple-300 bg-purple-500/10 border border-purple-500/20 rounded-full px-2.5 py-1">{t}</span>
+                  <ul className="space-y-1.5 text-sm text-neutral-400 mb-7">
+                    {["Built the full web application interface", "Integrated flood & vulnerability datasets", "Compared Random Forest and XGBoost models", "Built data-driven visualizations"].map(p => (
+                      <li key={p} className="flex items-start gap-2"><ChevronRight size={14} className="text-purple-500 shrink-0 mt-0.5" />{p}</li>
                     ))}
-                    <span className="text-xs text-neutral-500 border border-neutral-700 rounded-full px-2.5 py-1">+{PROJECTS[0].stack.length - 4} more</span>
-                  </div>
+                  </ul>
                   <div className="flex flex-wrap gap-3">
-                    <a href="/assets/Likas-Assets/LIKAS%20-PROPOSAL.pdf" target="_blank" onClick={e => e.stopPropagation()}
+                    <a href="/assets/Likas-Assets/LIKAS%20-PROPOSAL.pdf" target="_blank"
                       className="inline-flex items-center text-xs font-bold text-purple-400 hover:text-purple-300 bg-purple-500/10 px-4 py-2 rounded-full border border-purple-500/30 transition-colors">
                       Project Proposal <ExternalLink size={12} className="ml-1.5" />
                     </a>
-                    <a href="/assets/Likas-Assets/LIKAS%20-%20DETAILED%20USER%20MANUAL.pdf" target="_blank" onClick={e => e.stopPropagation()}
+                    <a href="/assets/Likas-Assets/LIKAS%20-%20DETAILED%20USER%20MANUAL.pdf" target="_blank"
                       className="inline-flex items-center text-xs font-bold text-purple-400 hover:text-purple-300 bg-purple-500/10 px-4 py-2 rounded-full border border-purple-500/30 transition-colors">
                       User Manual <ExternalLink size={12} className="ml-1.5" />
                     </a>
@@ -746,42 +428,33 @@ export default function Portfolio() {
           {/* Gov Appointment */}
           <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-60px" }} transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }} className="mb-16">
-            <div
-              onClick={() => setSelectedProject(PROJECTS[1])}
-              className="glass-card rounded-3xl overflow-hidden border border-white/10 hover:border-purple-500/40 hover-glow transition-all duration-500 cursor-pointer group relative">
-              <div className="absolute top-4 right-4 z-10 opacity-0 group-hover:opacity-100 transition-opacity">
-                <span className="text-xs font-bold text-purple-300 bg-purple-500/15 border border-purple-500/20 px-3 py-1 rounded-full">Click to explore →</span>
-              </div>
+            <div className="glass-card rounded-3xl overflow-hidden border border-white/10 hover:border-purple-500/40 hover-glow transition-all duration-500">
               <div className="grid grid-cols-1 lg:grid-cols-2">
                 {/* Content first */}
                 <div className="p-8 md:p-10">
-                  <span className="text-purple-400 font-mono text-xs font-bold tracking-wider">02 — Full Stack · Academic · 2024</span>
-                  <h3 className="text-2xl font-bold text-white mt-2 mb-0.5">Gov Appointment System</h3>
-                  <p className="text-neutral-300 text-sm font-medium mb-5">Web-Based Appointment Management Platform</p>
+                  <span className="text-purple-400 font-mono text-xs font-bold tracking-wider">02 — Full Stack · Academic</span>
+                  <h3 className="text-2xl font-bold text-white mt-2 mb-1">Gov Appointment System</h3>
+                  <p className="text-neutral-400 text-sm mb-6">Web-Based Appointment Management Platform</p>
                   <p className="text-neutral-400 text-sm leading-relaxed mb-6">
-                    Streamlining government service scheduling with multi-role workflows, status tracking, and a secure normalized database.
+                    A web-based appointment system built to streamline scheduling and record tracking for government services — multiple user roles, structured workflows, and a secure database architecture.
                   </p>
-                  <div className="flex gap-5 mb-6">
-                    {PROJECTS[1].stats.map(s => (
-                      <div key={s.label}>
-                        <div className="text-lg font-black text-purple-400">{s.val}</div>
-                        <div className="text-xs text-neutral-500">{s.label}</div>
-                      </div>
-                    ))}
+                  <div className="grid grid-cols-2 gap-4 mb-6 text-sm">
+                    <div><span className="text-white font-semibold text-xs uppercase tracking-widest block mb-1">My Role</span><span className="text-neutral-400">Full-Stack Dev · DB Designer</span></div>
+                    <div><span className="text-white font-semibold text-xs uppercase tracking-widest block mb-1">Stack</span><span className="text-neutral-400">React · Node.js · SQL · REST APIs</span></div>
                   </div>
-                  <div className="flex flex-wrap gap-2 mb-6">
-                    {PROJECTS[1].stack.map(t => (
-                      <span key={t} className="text-xs text-purple-300 bg-purple-500/10 border border-purple-500/20 rounded-full px-2.5 py-1">{t}</span>
+                  <ul className="space-y-1.5 text-sm text-neutral-400 mb-7">
+                    {["Multi-role system (Admin, Staff, Citizen)", "Appointment workflows with status tracking", "Normalized relational database schema", "Formal SRS documentation"].map(p => (
+                      <li key={p} className="flex items-start gap-2"><ChevronRight size={14} className="text-purple-500 shrink-0 mt-0.5" />{p}</li>
                     ))}
-                  </div>
-                  <a href="/assets/25057-GRP2-SRS-Final.pdf" target="_blank" onClick={e => e.stopPropagation()}
+                  </ul>
+                  <a href="/assets/25057-GRP2-SRS-Final.pdf" target="_blank"
                     className="inline-flex items-center text-xs font-bold text-purple-400 hover:text-purple-300 bg-purple-500/10 px-4 py-2 rounded-full border border-purple-500/30 transition-colors">
                     View SRS Document <ExternalLink size={12} className="ml-1.5" />
                   </a>
                 </div>
                 {/* Laptop */}
                 <div className="bg-neutral-900/50 p-8 flex items-center justify-center border-t lg:border-t-0 lg:border-l border-white/5">
-                  <LaptopMockup src={PROJECTS[1].screenshot!} alt="Gov System" />
+                  <LaptopMockup src="/assets/images/gov_screenshot_10.png" alt="Gov System" />
                 </div>
               </div>
             </div>
@@ -790,38 +463,38 @@ export default function Portfolio() {
           {/* Dr. MK Optical Clinic */}
           <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-60px" }} transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }} className="mb-16">
-            <div
-              onClick={() => setSelectedProject(PROJECTS[2])}
-              className="glass-card rounded-3xl overflow-hidden border border-white/10 hover:border-purple-500/40 hover-glow transition-all duration-500 cursor-pointer group relative">
-              <div className="absolute top-4 right-4 z-10 opacity-0 group-hover:opacity-100 transition-opacity">
-                <span className="text-xs font-bold text-purple-300 bg-purple-500/15 border border-purple-500/20 px-3 py-1 rounded-full">Click to explore →</span>
-              </div>
+            <div className="glass-card rounded-3xl overflow-hidden border border-white/10 hover:border-purple-500/40 hover-glow transition-all duration-500">
               <div className="grid grid-cols-1 lg:grid-cols-2">
-                {/* Visual side */}
-                <div className="bg-neutral-900/50 p-8 flex items-center justify-center border-b lg:border-b-0 lg:border-r border-white/5">
-                  <LaptopMockup src={PROJECTS[2].screenshot!} alt="Optical Clinic" />
+                {/* Visual side — no screenshot, stylized */}
+                <div className="bg-neutral-900/50 p-10 flex flex-col items-center justify-center border-b lg:border-b-0 lg:border-r border-white/5 min-h-[280px]">
+                  <motion.div animate={{ y: [0, -8, 0] }} transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
+                    className="bg-white/5 border border-white/10 rounded-2xl p-8 text-center w-full max-w-xs shadow-[0_0_40px_rgba(168,85,247,0.08)]">
+                    <span className="text-4xl font-black text-white/40 tracking-tighter block mb-2">MK</span>
+                    <span className="text-purple-300 font-mono text-xs tracking-widest font-bold block mb-5">OPTICAL CLINIC</span>
+                    <div className="flex flex-col gap-2">
+                      {["Patient Records", "Prescriptions", "Encrypted Backup"].map(f => (
+                        <span key={f} className="text-xs text-neutral-400 bg-white/5 border border-white/8 rounded-full px-4 py-1.5">{f}</span>
+                      ))}
+                    </div>
+                  </motion.div>
                 </div>
                 {/* Content */}
                 <div className="p-8 md:p-10">
-                  <span className="text-purple-400 font-mono text-xs font-bold tracking-wider">03 — Full Stack · Freelance · 2023</span>
-                  <h3 className="text-2xl font-bold text-white mt-2 mb-0.5">Dr. M.K. Optical Clinic</h3>
-                  <p className="text-neutral-300 text-sm font-medium mb-5">Patient Records Management System</p>
+                  <span className="text-purple-400 font-mono text-xs font-bold tracking-wider">03 — Full Stack · Freelance</span>
+                  <h3 className="text-2xl font-bold text-white mt-2 mb-1">Dr. M.K. Optical Clinic</h3>
+                  <p className="text-neutral-400 text-sm mb-6">Patient Records Management System</p>
                   <p className="text-neutral-400 text-sm leading-relaxed mb-6">
-                    A secure, clinic-ready records system built from scratch — handling patient data, prescriptions, and encrypted backups.
+                    A web-based patient records system built for an optical clinic — streamlining patient data, prescriptions, and clinic operations.
                   </p>
-                  <div className="flex gap-5 mb-6">
-                    {PROJECTS[2].stats.map(s => (
-                      <div key={s.label}>
-                        <div className="text-lg font-black text-purple-400">{s.val}</div>
-                        <div className="text-xs text-neutral-500">{s.label}</div>
-                      </div>
-                    ))}
+                  <div className="grid grid-cols-2 gap-4 mb-6 text-sm">
+                    <div><span className="text-white font-semibold text-xs uppercase tracking-widest block mb-1">My Role</span><span className="text-neutral-400">UI Dev · Junior Full-Stack</span></div>
+                    <div><span className="text-white font-semibold text-xs uppercase tracking-widest block mb-1">Stack</span><span className="text-neutral-400">HTML · CSS · JS · PHP · MySQL</span></div>
                   </div>
-                  <div className="flex flex-wrap gap-2">
-                    {PROJECTS[2].stack.map(t => (
-                      <span key={t} className="text-xs text-purple-300 bg-purple-500/10 border border-purple-500/20 rounded-full px-2.5 py-1">{t}</span>
+                  <ul className="space-y-1.5 text-sm text-neutral-400">
+                    {["Designed and built the full system UI from scratch", "Built encrypted backup & restore functionality"].map(p => (
+                      <li key={p} className="flex items-start gap-2"><ChevronRight size={14} className="text-purple-500 shrink-0 mt-0.5" />{p}</li>
                     ))}
-                  </div>
+                  </ul>
                 </div>
               </div>
             </div>
@@ -1027,13 +700,6 @@ export default function Portfolio() {
               </div>
             </motion.div>
           </div>
-        )}
-      </AnimatePresence>
-
-      {/* ─── Project Modal ─── */}
-      <AnimatePresence>
-        {selectedProject && (
-          <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />
         )}
       </AnimatePresence>
 

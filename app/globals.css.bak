@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", sans-serif;
+}
+
+/* Custom glow effects for the developer aesthetic */
+@layer utilities {
+  .glow-purple {
+    box-shadow: 0 0 20px 0px rgba(168, 85, 247, 0.4);
+  }
+  
+  .text-glow-purple {
+    text-shadow: 0 0 15px rgba(168, 85, 247, 0.5);
+  }
+  
+  .glass-card {
+    background: rgba(23, 23, 23, 0.7);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+}
