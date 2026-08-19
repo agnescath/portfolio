@@ -9,12 +9,12 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'Agnes Catherine F. Suico — Portfolio 2026',
+  title: 'Agnes Catherine Suico',
   description:
     'A professional developer portfolio by Agnes Catherine F. Suico, a CS undergrad majoring in Data Science and Full Stack Development.',
   generator: 'Next.js',
   openGraph: {
-    title: 'Agnes Catherine F. Suico — Portfolio 2026',
+    title: 'Agnes Catherine Suico',
     description:
       'A professional developer portfolio by Agnes Catherine F. Suico, a CS undergrad majoring in Data Science and Full Stack Development.',
     type: 'website',
