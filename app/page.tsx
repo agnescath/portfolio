@@ -557,10 +557,6 @@ export default function Portfolio() {
           ))}
         </div>
         <div className="flex items-center gap-3">
-          <MagneticBtn href="/assets/resume.pdf" target="_blank" rel="noreferrer"
-            className="hidden md:inline-flex items-center gap-2 border border-white/10 hover:border-purple-500/50 text-neutral-300 hover:text-white px-4 py-2 rounded-full text-sm font-medium transition-all duration-300">
-            <FileText size={14} /> Resume
-          </MagneticBtn>
           <MagneticBtn href="#contact"
             className="hidden md:inline-flex bg-purple-600 hover:bg-purple-500 text-white px-5 py-2 rounded-full text-sm font-semibold transition-all duration-300 shadow-[0_0_15px_rgba(168,85,247,0.3)]">
             LET'S TALK
@@ -603,9 +599,8 @@ export default function Portfolio() {
             transition={{ duration: 0.7, delay: 0.35 }} className="mb-10">
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">Agnes Catherine Suico</h2>
             <p className="text-lg md:text-xl text-neutral-400 max-w-2xl mx-auto leading-relaxed">
-              Computer Science student specializing in{' '}
-              <strong className="text-purple-400 font-semibold">Data Science &amp; Full-Stack Development</strong>,
-              turning ideas and real-world problems into functional, user-focused applications.
+              Hi, I'm Agnes. I bridge the gap between complex data science and full-stack web development to build{' '}
+              <strong className="text-purple-400 font-semibold">functional, high-impact applications.</strong>
             </p>
           </motion.div>
 
@@ -648,12 +643,11 @@ export default function Portfolio() {
             <motion.div initial={{ opacity: 0, x: -50 }} whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
               className="glass-card p-8 md:p-10 rounded-2xl border-l-4 border-l-purple-500 hover-glow flex flex-col justify-center h-full">
-              <h3 className="text-2xl font-bold text-white mb-6">Who is Agnes?</h3>
               <p className="text-neutral-300 text-lg leading-relaxed mb-6">
-                I'm a Computer Science student specializing in Data Science. From data analysis and machine learning to building full-stack applications, I enjoy creating practical solutions that turn ideas and data into useful, user-focused products.  
+                I'm a developer passionate about transforming raw data into intuitive web products. My background in Computer Science at Adamson University gave me a strong foundation in machine learning and full-stack development, allowing me to build systems that aren't just functional, but smart.
               </p>
               <p className="text-neutral-400 text-lg leading-relaxed">
-                I'm currently looking for opportunities where I can grow as a developer, contribute to real-world projects, and learn from experienced teams.
+                When I'm not glued to my screen building applications, you'll usually find me exploring new tech trends, dancing, or taking a quick break to recharge before diving into the next project. I'm currently looking for opportunities where I can grow as a developer and contribute to real-world products.
               </p>
             </motion.div>
 
@@ -685,12 +679,12 @@ export default function Portfolio() {
               <motion.div whileHover={{ y: -3 }} transition={{ type: "spring", stiffness: 300, damping: 20 }}
                 className="glass-card p-6 rounded-2xl hover-glow">
                 <div className="flex items-start gap-4">
-                  <div className="bg-yellow-500/10 p-3 rounded-xl border border-yellow-500/20 shrink-0">
-                    <Award className="text-yellow-400" size={20} />
+                  <div className="bg-purple-500/10 p-3 rounded-xl border border-purple-500/20 shrink-0">
+                    <Award className="text-purple-400" size={20} />
                   </div>
                   <div>
                     <h4 className="font-bold text-white">Dean's List</h4>
-                    <p className="text-yellow-300 text-sm font-medium mt-0.5">Academic Excellence</p>
+                    <p className="text-purple-300 text-sm font-medium mt-0.5">Academic Excellence</p>
                     <p className="text-neutral-500 text-sm mt-1">Adamson University</p>
                   </div>
                 </div>
@@ -698,7 +692,7 @@ export default function Portfolio() {
 
               {/* Quick stats */}
               <div className="grid grid-cols-3 gap-3">
-                {[{ val: "3+", label: "Years coding" }, { val: "5+", label: "Projects built" }, { val: "2", label: "Certs earned" }].map(s => (
+                {[{ val: "3+", label: "Years coding" }, { val: "5+", label: "Projects built" }, { val: "3", label: "Certs earned" }].map(s => (
                   <motion.div key={s.label} whileHover={{ scale: 1.05 }}
                     className="glass-card p-4 rounded-xl text-center border border-white/5 hover:border-purple-500/20 transition-colors">
                     <div className="text-2xl font-black text-purple-400">{s.val}</div>
