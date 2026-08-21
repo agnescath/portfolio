@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useScroll, useSpring, useTransform, useMotionValue } from 'framer-motion';
-import { Terminal, BrainCircuit, Code2, ExternalLink, Mail, Award, Layout, Database, BarChart3, ChevronRight, CheckCircle2, GraduationCap, FileText, X } from 'lucide-react';
+import { Terminal, BrainCircuit, Code2, ExternalLink, Mail, Award, Layout, Database, BarChart3, ChevronRight, CheckCircle2, GraduationCap, FileText, X, Menu } from 'lucide-react';
 
 /* ─── Project data ─── */
 const PROJECTS = [
@@ -182,7 +182,7 @@ const ProjectModal = ({ project, onClose }: { project: typeof PROJECTS[0]; onClo
         className="relative w-full max-w-3xl max-h-[92vh] sm:max-h-[88vh] bg-neutral-950 border border-white/10 sm:rounded-3xl rounded-t-3xl shadow-[0_0_80px_rgba(168,85,247,0.15)] overflow-hidden flex flex-col"
       >
         {/* ── Header ── */}
-        <div className="relative bg-gradient-to-br from-purple-900/30 to-neutral-950 border-b border-white/8 p-8 md:p-10 shrink-0">
+        <div className="relative bg-gradient-to-br from-purple-900/30 to-neutral-950 border-b border-white/8 p-6 md:p-10 shrink-0">
           {/* Close */}
           <button onClick={onClose}
             className="absolute top-6 right-6 bg-white/5 hover:bg-white/10 text-white p-2.5 rounded-full transition-colors border border-white/10">
@@ -197,7 +197,7 @@ const ProjectModal = ({ project, onClose }: { project: typeof PROJECTS[0]; onClo
           <p className="text-neutral-300 text-sm md:text-base leading-relaxed max-w-2xl">{project.tagline}</p>
 
           {/* Stats */}
-          <div className="flex justify-center gap-8 mt-8 pt-6 border-t border-white/5 text-center">
+          <div className="flex justify-center gap-4 sm:gap-8 mt-6 sm:mt-8 pt-6 border-t border-white/5 text-center">
             {project.stats.map(s => (
               <div key={s.label}>
                 <div className="text-2xl font-black text-white">{s.val}</div>
@@ -352,7 +352,7 @@ const MoreProjectModal = ({ project, onClose }: { project: typeof MORE_PROJECTS[
         transition={{ ease: [0.22, 1, 0.36, 1], duration: 0.4 }}
         className="relative w-full max-w-2xl bg-neutral-900 border border-white/10 rounded-2xl shadow-[0_0_60px_rgba(168,85,247,0.2)] overflow-hidden flex flex-col"
       >
-        <div className="relative bg-gradient-to-br from-purple-900/40 to-neutral-900 border-b border-white/5 p-8 shrink-0">
+        <div className="relative bg-gradient-to-br from-purple-900/40 to-neutral-900 border-b border-white/5 p-6 md:p-8 shrink-0">
           <button onClick={onClose} className="absolute top-6 right-6 bg-white/5 hover:bg-white/10 text-white p-2 rounded-full transition-colors border border-white/10">
             <X size={16} />
           </button>
@@ -363,7 +363,7 @@ const MoreProjectModal = ({ project, onClose }: { project: typeof MORE_PROJECTS[
           <p className="text-neutral-400 text-sm leading-relaxed">{project.desc}</p>
         </div>
 
-        <div className="p-8 space-y-8">
+        <div className="p-6 md:p-8 space-y-6 md:space-y-8">
           <div>
             <h3 className="text-xs font-bold text-neutral-500 uppercase tracking-widest mb-4">Tech & Tools</h3>
             <div className="flex flex-wrap gap-2">
@@ -524,6 +524,8 @@ export default function Portfolio() {
     }
   };
 
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   return (
     <div className="min-h-screen bg-neutral-950 text-neutral-200 selection:bg-purple-600/30 font-sans relative">
 
@@ -561,8 +563,42 @@ export default function Portfolio() {
             className="hidden md:inline-flex bg-purple-600 hover:bg-purple-500 text-white px-5 py-2 rounded-full text-sm font-semibold transition-all duration-300 shadow-[0_0_15px_rgba(168,85,247,0.3)]">
             LET'S TALK
           </MagneticBtn>
+          <button className="md:hidden text-white p-2" onClick={() => setMobileMenuOpen(true)}>
+            <Menu size={24} />
+          </button>
         </div>
       </motion.nav>
+
+      {/* ─── Mobile Nav Overlay ─── */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} 
+            className="fixed inset-0 z-[60] bg-neutral-950/98 backdrop-blur-3xl flex flex-col p-6">
+            <div className="flex justify-between items-center mb-16">
+              <div className="font-bold text-xl tracking-tighter">
+                <span className="text-white">ACS</span><span className="text-purple-500">.DEV</span>
+              </div>
+              <button className="text-white bg-white/5 hover:bg-white/10 p-2.5 rounded-full border border-white/10" onClick={() => setMobileMenuOpen(false)}>
+                <X size={20} />
+              </button>
+            </div>
+            <div className="flex flex-col gap-6 text-2xl font-bold text-neutral-300">
+              {['About', 'Projects', 'Skills', 'Contact'].map((item) => (
+                <a key={item} href={`#${item.toLowerCase()}`} onClick={() => setMobileMenuOpen(false)} className="hover:text-purple-400 transition-colors">
+                  {item}
+                </a>
+              ))}
+            </div>
+            <div className="mt-auto mb-8">
+              <a href="#contact"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block w-full bg-purple-600 hover:bg-purple-500 text-white text-center py-4 rounded-full font-bold shadow-[0_0_20px_rgba(168,85,247,0.4)]">
+                LET'S TALK
+              </a>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* ─── Hero ─── */}
       <section id="home" className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
@@ -734,7 +770,7 @@ export default function Portfolio() {
               <motion.div key={i} variants={fadeIn}
                 whileHover={{ y: -8, scale: 1.02 }}
                 transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                className={`glass-card p-8 rounded-2xl border-t-4 ${card.accent} hover-glow cursor-default`}>
+                className={`glass-card p-6 md:p-8 rounded-2xl border-t-4 ${card.accent} hover-glow cursor-default`}>
                 <div className="bg-purple-500/10 w-12 h-12 rounded-xl flex items-center justify-center mb-5 border border-purple-500/20">
                   {card.icon}
                 </div>
@@ -775,7 +811,7 @@ export default function Portfolio() {
                     <LaptopMockup src={project.screenshot!} alt={project.title} />
                   </div>
                   {/* Content on bottom */}
-                  <div className="p-8 flex flex-col flex-1">
+                  <div className="p-6 md:p-8 flex flex-col flex-1">
                     <span className="text-purple-400 font-mono text-xs font-bold tracking-wider uppercase mb-2">
                       My Role: {project.tasks[1] === 'Full-Stack Dev' ? 'Full-Stack Developer' : project.tasks[1] || 'Developer'}
                     </span>
@@ -785,7 +821,7 @@ export default function Portfolio() {
                       {project.tagline}
                     </p>
                     {/* Stats */}
-                    <div className="flex justify-center gap-8 mt-auto pt-4 border-t border-white/5 text-center">
+                    <div className="flex justify-center gap-4 sm:gap-8 mt-auto pt-4 border-t border-white/5 text-center">
                       {project.stats.slice(0, 3).map(s => (
                         <div key={s.label}>
                           <div className="text-lg font-black text-purple-400">{s.val}</div>
@@ -943,7 +979,7 @@ export default function Portfolio() {
                 <X size={16} />
               </button>
               {/* Header */}
-              <div className="bg-gradient-to-br from-purple-900/40 to-neutral-900 p-8 border-b border-white/5">
+              <div className="bg-gradient-to-br from-purple-900/40 to-neutral-900 p-6 md:p-8 border-b border-white/5">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="bg-purple-500/20 p-2.5 rounded-xl border border-purple-500/20">
                     <CheckCircle2 className="text-purple-400" size={20} />
@@ -955,7 +991,7 @@ export default function Portfolio() {
                 </div>
               </div>
               {/* Body */}
-              <div className="p-8">
+              <div className="p-6 md:p-8">
                 <div className="mb-6">
                   <h4 className="text-xs font-bold text-neutral-500 uppercase tracking-widest mb-3">What I Learned</h4>
                   <p className="text-neutral-300 text-sm leading-relaxed">{selectedCert.learned}</p>
